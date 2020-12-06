@@ -1,5 +1,7 @@
 {
   "name": "cob-game-store",
-  "integrations": {},
+  "integrations": {
+    "capacitor": {}
+  },
   "type": "angular"
 }

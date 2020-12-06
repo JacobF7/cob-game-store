@@ -1,0 +1,36 @@
+<ion-header>
+  <ion-toolbar color="primary">
+    <ion-title>{{game ? game.title : '...'}}</ion-title>
+    <ion-buttons slot="start">
+      <ion-back-button defaultHref="/store/browse"></ion-back-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <ion-grid *ngIf="game">
+    <ion-row>
+      <ion-col size-md="6" offset-md="3">
+        <ion-card>
+          <ion-card-header>
+            <ion-card-title> {{game.title}} </ion-card-title>
+            <ion-card-subtitle> {{game.price | currency}} </ion-card-subtitle>
+          </ion-card-header>
+          <ion-card-content>
+            <ion-img class="featured-img" [src]="game.imageUrl"></ion-img>
+            <p class="ion-padding">{{game.description}}</p>
+            <div class="ion-text-end">
+              <ion-button fill="outline" (click)="addGameToCart()">
+                <ion-icon slot="start" name="add"></ion-icon>
+                Add to Cart
+              </ion-button>
+            </div>
+          </ion-card-content>
+        </ion-card>
+      </ion-col>
+    </ion-row>
+  </ion-grid>
+  <ng-container *ngIf="!game">
+    <ion-spinner color="primary" class="loading"></ion-spinner>
+  </ng-container>
+</ion-content>

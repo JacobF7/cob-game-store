@@ -1,0 +1,27 @@
+<ion-content>
+  <ion-router-outlet></ion-router-outlet>
+  <ion-tabs>
+    <ion-tab-bar slot="bottom">
+      <ion-tab-button tab="browse">
+        <ion-icon name="game-controller-outline"></ion-icon>
+        <ion-label>Browse</ion-label>
+      </ion-tab-button>
+
+      <ion-tab-button tab="orders">
+        <ion-icon name="list-outline"></ion-icon>
+        <ion-label>Orders</ion-label>
+      </ion-tab-button>
+
+      <ion-tab-button tab="shopping-cart">
+        <ion-icon name="cart-outline"></ion-icon>
+        <ion-label>Cart</ion-label>
+        <ion-badge>{{cartItems}}</ion-badge>
+      </ion-tab-button>
+
+      <ion-tab-button tab="profile">
+        <ion-icon name="person-circle-outline"></ion-icon>
+        <ion-label>Profile</ion-label>
+      </ion-tab-button>
+    </ion-tab-bar>
+  </ion-tabs>
+</ion-content>

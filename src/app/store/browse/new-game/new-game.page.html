@@ -1,0 +1,67 @@
+<ion-header>
+  <ion-toolbar color="primary">
+    <ion-title>New Game</ion-title>
+    <ion-buttons slot="start">
+      <ion-back-button defaultHref="/store/browse"></ion-back-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <form [formGroup]="newGameForm" (ngSubmit)="addNewGame()">
+    <ion-grid>
+      <ion-row>
+        <ion-col size-md="3" offset-md="3">
+          <ion-list>
+            <ion-item>
+              <ion-label position="floating">Title</ion-label>
+              <ion-input formControlName="title" type="text"></ion-input>
+            </ion-item>
+            <ion-item *ngIf="isFieldInvalid('title')" lines="none">
+              <ion-label color="danger">Invalid Title</ion-label>
+            </ion-item>
+            <ion-item>
+              <ion-label position="floating">Description</ion-label>
+              <ion-textarea formControlName="description" rows="7"></ion-textarea>
+            </ion-item>
+            <ion-item *ngIf="isFieldInvalid('description')" lines="none">
+              <ion-label color="danger">Invalid Description</ion-label>
+            </ion-item>
+          </ion-list>
+        </ion-col>
+        <ion-col size-md="3" class="image-col">
+          <ng-container *ngIf="newGameForm.get('imageUrl').value">
+            <ion-img [src]="newGameForm.get('imageUrl').value"></ion-img>
+          </ng-container>
+          <ng-container *ngIf="!newGameForm.get('imageUrl').value">
+            <ion-icon class="icon-lg" color="primary" name="image-outline"></ion-icon>
+            <p>No Image To Preview</p>
+          </ng-container>
+        </ion-col>
+      </ion-row>
+      <ion-row>
+        <ion-col size-md="6" offset-md="3">
+          <ion-item>
+            <ion-label position="floating">Price ($)</ion-label>
+            <ion-input formControlName="price" type="number" min="0"></ion-input>
+          </ion-item>
+          <ion-item *ngIf="isFieldInvalid('price')" lines="none">
+            <ion-label color="danger">Invalid Price</ion-label>
+          </ion-item>
+          <ion-item>
+            <ion-label position="floating">Image Url</ion-label>
+            <ion-input formControlName="imageUrl" type="text"></ion-input>
+          </ion-item>
+          <ion-item *ngIf="isFieldInvalid('imageUrl')" lines="none">
+            <ion-label color="danger">Invalid Image Url</ion-label>
+          </ion-item>
+        </ion-col>
+      </ion-row>
+      <ion-row>
+        <ion-col size-md="6" offset-md="3" class="ion-margin-top">
+          <ion-button expand="block" type="submit" [disabled]="newGameForm.invalid">Add</ion-button>
+        </ion-col>
+      </ion-row>
+    </ion-grid>
+  </form>
+</ion-content>

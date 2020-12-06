@@ -1,0 +1,46 @@
+<ion-header>
+  <ion-toolbar color="primary">
+    <ion-title>Orders</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <ng-container *ngIf="orders">
+    <ion-grid>
+      <ng-container *ngIf="orders.length > 0">
+        <ion-row>
+          <ion-col size-md="6" offset-md="3">
+            <ion-list>
+              <ion-item *ngFor="let order of orders" [routerLink]="order.id" detail>
+                <ion-label>
+                  <h4>Order #{{order.id}}</h4>
+                  <p>{{order.addressLine1}}, {{order.addressLine2}}</p>
+                  <p>{{order.postCode}}, {{order.city}}</p>
+                  <p>{{order.country}}</p>
+                </ion-label>
+                <ion-label class="ion-text-right ion-padding">
+                  <h4>Total Price</h4>
+                  <p>{{order.totalPrice | currency}}</p>
+                </ion-label>
+              </ion-item>
+            </ion-list>
+          </ion-col>
+        </ion-row>
+      </ng-container>
+      <ng-container *ngIf="orders.length === 0">
+        <ion-row class="ion-margin ion-text-center icon-xl-container">
+          <ion-col>
+            <ion-icon color="medium" class="icon-xl" name="document-text-outline"></ion-icon>
+            <ion-text><h3>There are no orders!</h3></ion-text>
+            <ion-button color="primary" class="ion-padding" [routerLink]="['/', 'store', 'browse']">
+              Browse Games
+            </ion-button>
+          </ion-col>
+        </ion-row>
+      </ng-container>
+    </ion-grid>
+  </ng-container>
+  <ng-container *ngIf="!orders">
+    <app-orders-loading></app-orders-loading>
+  </ng-container>
+</ion-content>

@@ -1,0 +1,34 @@
+<ion-header>
+  <ion-toolbar color="primary">
+    <ion-title>Profile</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <ion-grid *ngIf="user">
+    <ion-row>
+      <ion-col size-md="6" offset-md="3">
+        <ion-list>
+          <ion-item>
+            <ion-avatar slot="start">
+              <ion-img [src]="getAvatarImage()"></ion-img>
+            </ion-avatar>
+            <ion-label>
+              <h2>{{user.email}}</h2>
+              <h3>Session Expiry: {{getSessionExpiryDate()}}</h3>
+              <p>{{user.localId}}</p>
+            </ion-label>
+          </ion-item>
+        </ion-list>
+      </ion-col>
+    </ion-row>
+    <ion-row>
+      <ion-col size-md="6" offset-md="3">
+        <ion-button expand="block" (click)="logout()">Logout</ion-button>
+      </ion-col>
+    </ion-row>
+  </ion-grid>
+  <ng-container *ngIf="!user">
+    <ion-spinner class="loading" color="primary"></ion-spinner>
+  </ng-container>
+</ion-content>

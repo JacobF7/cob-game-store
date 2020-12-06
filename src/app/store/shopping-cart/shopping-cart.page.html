@@ -1,0 +1,114 @@
+<ion-header>
+  <ion-toolbar color="primary">
+    <ion-title>Shopping Cart</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <ion-grid *ngIf="shoppingCartItems">
+    <ng-container *ngIf="shoppingCartItems.length > 0">
+      <ion-row>
+        <ion-col size-md="6" offset-md="3">
+          <ion-slides #slides>
+            <ion-slide>
+              <ion-list class="swiper-no-swiping">
+                <ion-item-sliding *ngFor="let item of shoppingCartItems">
+                  <ion-item>
+                    <ion-thumbnail slot="start">
+                      <ion-img [src]="item.game.imageUrl"></ion-img>
+                    </ion-thumbnail>
+                    <ion-label>
+                      <h2>{{ item.game.title }}</h2>
+                      <h3>{{ (item.game.price * item.quantity) | currency }}</h3>
+                    </ion-label>
+                    <ion-label class="quantity-picker">
+                      <ion-button fill="clear" color="success" (click)="incrementGameQuantity(item)">
+                        <ion-icon slot="icon-only" name="add-circle-outline"></ion-icon>
+                      </ion-button>
+                      <h2>{{ item.quantity }}</h2>
+                      <ion-button fill="clear" color="danger" (click)="decrementGameQuantity(item)">
+                        <ion-icon slot="icon-only" name="remove-circle-outline"></ion-icon>
+                      </ion-button>
+                    </ion-label>
+                  </ion-item>
+                  <ion-item-options side="end">
+                    <ion-item-option color="danger">
+                      <ion-icon name="trash" slot="icon-only" (click)="removeGame(item)"></ion-icon>
+                    </ion-item-option>
+                  </ion-item-options>
+                </ion-item-sliding>
+              </ion-list>
+              <ion-button class="ion-padding" expand="block" (click)="slides.slideNext()">
+                Proceed To Checkout
+              </ion-button>
+            </ion-slide>
+            <ion-slide>
+              <form [formGroup]="orderForm" (ngSubmit)="submitOrder()">
+                <ion-list>
+                  <ion-list-header lines="inset">
+                    <h2>Shipping Details</h2>
+                  </ion-list-header>
+                  <ion-item>
+                    <ion-label position="floating">Address Line 1</ion-label>
+                    <ion-input formControlName="addressLine1" type="text"></ion-input>
+                  </ion-item>
+                  <ion-item lines="none" *ngIf="isFieldInvalid('addressLine1')">
+                    <ion-label color="danger">Invalid Address Line 1</ion-label>
+                  </ion-item>
+                  <ion-item>
+                    <ion-label position="floating">Address Line 2</ion-label>
+                    <ion-input formControlName="addressLine2" type="text"></ion-input>
+                  </ion-item>
+                  <ion-item lines="none" *ngIf="isFieldInvalid('addressLine2')">
+                    <ion-label color="danger">Invalid Address Line 2</ion-label>
+                  </ion-item>
+                  <ion-item>
+                    <ion-label position="floating">City</ion-label>
+                    <ion-input formControlName="city" type="text"></ion-input>
+                  </ion-item>
+                  <ion-item lines="none" *ngIf="isFieldInvalid('city')">
+                    <ion-label color="danger">Invalid City</ion-label>
+                  </ion-item>
+                  <ion-item>
+                    <ion-label position="floating">Post Code</ion-label>
+                    <ion-input formControlName="postCode" type="text"></ion-input>
+                  </ion-item>
+                  <ion-item lines="none" *ngIf="isFieldInvalid('postCode')">
+                    <ion-label color="danger">Invalid Post Code</ion-label>
+                  </ion-item>
+                  <ion-item>
+                    <ion-label position="floating">Country</ion-label>
+                    <ion-select formControlName="country" okText="Ok" cancelText="Cancel">
+                      <ion-select-option *ngFor="let country of shippingCountries">{{country}}</ion-select-option>
+                    </ion-select>
+                  </ion-item>
+                  <ion-item lines="none" *ngIf="isFieldInvalid('country')">
+                    <ion-label color="danger">Invalid Country</ion-label>
+                  </ion-item>
+                </ion-list>
+                <ion-button class="ion-padding" expand="block" type="submit" [disabled]="orderForm.invalid">
+                  Submit Order
+                </ion-button>
+                <ion-button class="ion-padding" expand="block" fill="outline" (click)="slides.slidePrev()">
+                  Back To Cart
+                </ion-button>
+              </form>
+            </ion-slide>
+          </ion-slides>
+        </ion-col>
+      </ion-row>
+    </ng-container>
+    <ng-container *ngIf="shoppingCartItems.length === 0">
+      <ion-row class="ion-margin ion-text-center icon-xl-container">
+        <ion-col>
+          <ion-icon color="medium" class="icon-xl" name="hourglass-outline"></ion-icon>
+          <ion-text><h3>There are no items in your cart!</h3></ion-text>
+          <ion-button color="primary" class="ion-padding" [routerLink]="['/', 'store', 'browse']">
+            Browse Games
+          </ion-button>
+        </ion-col>
+      </ion-row>
+    </ng-container>
+  </ion-grid>
+  <app-shopping-cart-loading *ngIf="!shoppingCartItems"></app-shopping-cart-loading>
+</ion-content>

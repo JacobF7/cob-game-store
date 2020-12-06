@@ -1,0 +1,60 @@
+<ion-header>
+  <ion-toolbar color="primary">
+    <ion-title>Browse Games</ion-title>
+    <ion-buttons slot="primary">
+      <ion-button routerLink="new">
+        <ion-icon name="add-outline" slot="icon-only"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <ion-grid *ngIf="games">
+    <ng-container *ngIf="games.length > 0">
+      <ion-row>
+        <ion-col size-md="6" offset-md="3">
+          <ion-card type="button" [routerLink]="games[0].id">
+            <ion-card-header>
+              <ion-card-title>{{games[0].title}}</ion-card-title>
+              <ion-card-subtitle>{{games[0].price | currency}}</ion-card-subtitle>
+            </ion-card-header>
+            <ion-card-content>
+              <ion-img class="featured-img" [src]="games[0].imageUrl"></ion-img>
+              <p class="ion-padding">{{games[0].description}}</p>
+            </ion-card-content>
+          </ion-card>
+        </ion-col>
+      </ion-row>
+      <ion-row>
+        <ion-col size-md="6" offset-md="3">
+          <ion-list>
+            <ion-list-header lines="inset">
+              <h2>All Games</h2>
+            </ion-list-header>
+            <ion-item *ngFor="let game of games" detail [routerLink]="game.id">
+              <ion-thumbnail slot="start">
+                <ion-img [src]="game.imageUrl"></ion-img>
+              </ion-thumbnail>
+              <ion-label>
+                <h3>{{game.title}}</h3>
+                <h4>{{game.price | currency}}</h4>
+                <p>{{game.description}}</p>
+              </ion-label>
+            </ion-item>
+          </ion-list>
+        </ion-col>
+      </ion-row>
+    </ng-container>
+    <ng-container *ngIf="games.length === 0">
+      <ion-row class="ion-margin ion-text-center icon-xl-container">
+        <ion-col>
+          <ion-icon color="medium" class="icon-xl" name="rainy-outline"></ion-icon>
+          <ion-text><h3>There are no games to view!</h3></ion-text>
+          <ion-text color="medium"><h5>Please come back later.</h5></ion-text>
+        </ion-col>
+      </ion-row>
+    </ng-container>
+  </ion-grid>
+  <app-browse-loading *ngIf="!games"></app-browse-loading>
+</ion-content>
